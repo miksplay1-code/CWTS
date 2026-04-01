@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mikayrie Dulay — CWTS 2 Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --green-deep:   #1a3a2a;
+      --green-mid:    #2d5a40;
+      --green-light:  #4a7c59;
+      --green-muted:  #6b9e7a;
+      --gold:         #c9a84c;
+      --gold-light:   #e4c870;
+      --cream:        #f5f0e8;
+      --cream-dark:   #ede7d9;
+      --white:        #ffffff;
+      --text-dark:    #1a1a1a;
+      --text-mid:     #3d3d3d;
+      --text-muted:   #7a7a6e;
+      --card-bg:      #ffffff;
+      --shadow-sm:    0 2px 12px rgba(26,58,42,0.08);
+      --shadow-md:    0 8px 32px rgba(26,58,42,0.14);
+      --shadow-lg:    0 20px 60px rgba(26,58,42,0.20);
+      --radius-sm:    6px;
+      --radius-md:    14px;
+      --radius-lg:    22px;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'DM Sans', sans-serif;
+      --font-mono:    'DM Mono', monospace;
+      --transition:   all 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background-color: var(--cream);
+      color: var(--text-dark);
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; object-fit: cover; }
+    a { color: inherit; text-decoration: none; }
+
+    .container { width: 90%; max-width: 1180px; margin: 0 auto; }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.72s ease, transform 0.72s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.10s; }
+    .reveal-delay-2 { transition-delay: 0.20s; }
+    .reveal-delay-3 { transition-delay: 0.32s; }
+    .reveal-delay-4 { transition-delay: 0.44s; }
+    .reveal-delay-5 { transition-delay: 0.56s; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 200; padding: 1.3rem 0;
+      transition: var(--transition);
+    }
+    nav.scrolled {
+      background: rgba(26,58,42,0.97);
+      backdrop-filter: blur(14px);
+      padding: 0.85rem 0;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.28);
+    }
+    .nav-inner { display: flex; justify-content: space-between; align-items: center; }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--cream); letter-spacing: 0.03em;
+    }
+    .nav-logo span { color: var(--gold); }
+    nav ul { display: flex; gap: 1.8rem; list-style: none; }
+    nav ul a {
+      font-size: 0.82rem; font-weight: 500;
+      color: rgba(245,240,232,0.72);
+      letter-spacing: 0.06em; transition: color 0.2s;
+    }
+    nav ul a:hover { color: var(--gold); }
+
+    /* WAVES */
+    .wave { display: block; width: 100%; overflow: hidden; line-height: 0; }
+    .wave svg { display: block; width: 100%; }
+
+    /* SECTION 1: ABOUT / HERO */
+    #about {
+      min-height: 100vh;
+      background: var(--green-deep);
+      position: relative;
+      display: flex; align-items: center;
+      overflow: hidden;
+      padding: 9rem 0 6rem;
+    }
+    #about::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+      opacity: 0.35; z-index: 1; pointer-events: none;
+    }
+    .hero-orb { position: absolute; border-radius: 50%; pointer-events: none; }
+    .orb1 {
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(74,124,89,0.22) 0%, transparent 68%);
+      top: -200px; right: -200px;
+    }
+    .orb2 {
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, rgba(201,168,76,0.10) 0%, transparent 70%);
+      bottom: -100px; left: -120px;
+    }
+    .hero-layout {
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      background: rgba(201,168,76,0.13);
+      border: 1px solid rgba(201,168,76,0.28);
+      border-radius: 100px;
+      padding: 0.3rem 0.95rem;
+      margin-bottom: 1.8rem;
+    }
+    .eyebrow .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .eyebrow span {
+      font-family: var(--font-mono); font-size: 0.68rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold-light);
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:0.45; transform:scale(0.78); }
+    }
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6.5vw, 5.5rem);
+      font-weight: 900; line-height: 1.05;
+      color: var(--cream); margin-bottom: 1rem;
+    }
+    .hero-name em { font-style: italic; color: var(--gold); }
+    .hero-tagline {
+      font-size: 1rem; color: rgba(245,240,232,0.62);
+      max-width: 420px; margin-bottom: 2.4rem; line-height: 1.8;
+    }
+    .hero-chips { display: flex; flex-wrap: wrap; gap: 0.65rem; }
+    .chip {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 100px; padding: 0.35rem 1rem;
+      font-family: var(--font-mono); font-size: 0.7rem;
+      letter-spacing: 0.1em; color: rgba(245,240,232,0.65);
+    }
+    .cwts-intro-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(201,168,76,0.22);
+      border-radius: var(--radius-lg);
+      padding: 2.8rem 2.4rem;
+      backdrop-filter: blur(8px);
+    }
+    .cwts-intro-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.6rem; font-weight: 700;
+      color: var(--cream); margin-bottom: 1.2rem; line-height: 1.25;
+    }
+    .cwts-intro-card h3 em { font-style: italic; color: var(--gold); }
+    .cwts-intro-card p {
+      font-size: 0.9rem; color: rgba(245,240,232,0.65);
+      line-height: 1.85; margin-bottom: 1rem;
+    }
+    .cwts-intro-card p:last-child { margin-bottom: 0; }
+    .gold-rule {
+      width: 48px; height: 2px; background: var(--gold);
+      margin-bottom: 1.4rem; border-radius: 2px;
+    }
+    .hero-scroll {
+      position: absolute; bottom: 2.2rem; left: 50%; transform: translateX(-50%);
+      z-index: 3; display: flex; flex-direction: column;
+      align-items: center; gap: 0.5rem; cursor: pointer;
+    }
+    .hero-scroll span {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(245,240,232,0.4);
+    }
+    .scroll-line {
+      width: 1px; height: 38px;
+      background: linear-gradient(to bottom, rgba(201,168,76,0.55), transparent);
+      animation: scrollDown 2s ease-in-out infinite;
+    }
+    @keyframes scrollDown {
+      0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+      50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
+    }
+
+    /* SECTION 2: EXPERIENCE */
+    #experience { background: var(--cream); padding: 7rem 0 5rem; }
+    .section-header { text-align: center; margin-bottom: 4.5rem; }
+    .section-header h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 900; color: var(--green-deep); margin-bottom: 0.6rem;
+    }
+    .section-header h2 em { font-style: italic; color: var(--green-mid); }
+    .section-header p { color: var(--text-muted); font-size: 0.95rem; max-width: 480px; margin: 0 auto; }
+
+    .split-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2.5rem; margin-bottom: 5rem;
+    }
+    .split-panel {
+      background: var(--card-bg); border-radius: var(--radius-md);
+      padding: 2.6rem 2.2rem; box-shadow: var(--shadow-sm);
+      border-top: 3px solid var(--gold);
+    }
+    .split-panel h3 {
+      font-family: var(--font-display); font-size: 1.35rem;
+      font-weight: 700; color: var(--green-deep); margin-bottom: 1.2rem;
+    }
+    .values-list { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
+    .values-list li {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      font-size: 0.9rem; color: var(--text-mid); line-height: 1.6;
+    }
+    .values-list li .ico { font-size: 1.15rem; margin-top: 0.05rem; flex-shrink: 0; }
+    .values-list li strong { color: var(--green-deep); font-weight: 600; }
+    .exp-items { display: flex; flex-direction: column; gap: 1.1rem; }
+    .exp-item {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding-bottom: 1.1rem; border-bottom: 1px solid var(--cream-dark);
+    }
+    .exp-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .exp-num {
+      font-family: var(--font-mono); font-size: 0.65rem; font-weight: 500;
+      color: var(--gold); background: var(--green-deep);
+      padding: 0.3rem 0.55rem; border-radius: var(--radius-sm);
+      flex-shrink: 0; margin-top: 0.15rem;
+    }
+    .exp-item-text strong {
+      font-size: 0.92rem; color: var(--green-deep);
+      font-weight: 600; display: block; margin-bottom: 0.2rem;
+    }
+    .exp-item-text span { font-size: 0.83rem; color: var(--text-muted); }
+
+    /* Gallery */
+    .gallery-label { text-align: center; margin-bottom: 2rem; margin-top: 1rem; }
+    .gallery-label h3 {
+      font-family: var(--font-display); font-size: 1.8rem;
+      font-weight: 700; color: var(--green-deep);
+    }
+    .gallery-label p { font-size: 0.88rem; color: var(--text-muted); margin-top: 0.4rem; }
+    .photo-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem; margin-bottom: 3.5rem;
+    }
+    .photo-grid.four-col { grid-template-columns: repeat(4, 1fr); }
+    .photo-grid.layout-tall .grid-item:first-child { grid-row: span 2; }
+    .grid-item {
+      position: relative; border-radius: var(--radius-md);
+      overflow: hidden; box-shadow: var(--shadow-sm);
+      background: linear-gradient(135deg, #cde0d3 0%, #b8cebd 100%);
+      cursor: pointer; min-height: 220px;
+    }
+    .grid-item.tall { min-height: 460px; }
+    .grid-item img {
+      width: 100%; height: 100%; min-height: inherit;
+      object-fit: cover;
+      transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+    }
+    .ph {
+      width: 100%; height: 100%; min-height: inherit;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 0.4rem;
+      transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+    }
+    .grid-item:hover img,
+    .grid-item:hover .ph { transform: scale(1.07); }
+    .ph-icon { font-size: 2rem; opacity: 0.38; }
+    .ph-label {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--green-mid); opacity: 0.55;
+    }
+    .photo-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,58,42,0.65) 0%, transparent 55%);
+      opacity: 0; transition: opacity 0.38s;
+      display: flex; align-items: flex-end; padding: 1rem 1.1rem;
+    }
+    .grid-item:hover .photo-overlay { opacity: 1; }
+    .photo-overlay span {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--gold-light);
+    }
+
+    /* SECTION 3: REFLECTIONS */
+    #reflections {
+      background: var(--green-deep);
+      padding: 8rem 0; position: relative; overflow: hidden;
+    }
+    #reflections::before {
+      content: '"';
+      position: absolute; top: -2rem; left: -2rem;
+      font-family: var(--font-display); font-size: 30rem;
+      font-weight: 900; color: rgba(255,255,255,0.025);
+      line-height: 1; pointer-events: none; user-select: none;
+    }
+    .reflections-inner { position: relative; z-index: 1; max-width: 820px; margin: 0 auto; }
+    .reflections-inner .section-header h2 { color: var(--cream); }
+    .reflections-inner .section-header h2 em { font-style: italic; color: var(--gold); }
+    .reflections-inner .section-header p { color: rgba(245,240,232,0.5); }
+    .day-cards { display: flex; flex-direction: column; gap: 1.8rem; margin-top: 3.5rem; }
+    .day-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(201,168,76,0.18);
+      border-radius: var(--radius-md);
+      padding: 2.2rem 2.4rem;
+      position: relative; overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .day-card:hover { border-color: rgba(201,168,76,0.38); }
+    .day-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--gold); border-radius: 3px 0 0 3px;
+    }
+    .day-card-header {
+      display: flex; align-items: center;
+      gap: 1rem; margin-bottom: 1.2rem;
+    }
+    .day-badge {
+      font-family: var(--font-mono); font-size: 0.65rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold); background: rgba(201,168,76,0.14);
+      border: 1px solid rgba(201,168,76,0.28);
+      padding: 0.28rem 0.75rem; border-radius: 100px; white-space: nowrap;
+    }
+    .day-card-header h4 {
+      font-family: var(--font-display); font-size: 1.15rem;
+      font-weight: 700; color: var(--cream);
+    }
+    .day-card blockquote {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 1.05rem; color: var(--gold-light);
+      opacity: 0.85; margin-bottom: 1rem; line-height: 1.6;
+    }
+    .day-card p {
+      font-size: 0.9rem; color: rgba(245,240,232,0.68); line-height: 1.9;
+    }
+
+    /* SECTION 4: CONCLUSION */
+    #conclusion { background: var(--cream); padding: 7rem 0 0; }
+    .qa-wrapper { max-width: 820px; margin: 0 auto; }
+    .qa-item {
+      margin-bottom: 3rem; padding-bottom: 3rem;
+      border-bottom: 1px solid var(--cream-dark);
+    }
+    .qa-item:last-child { border-bottom: none; margin-bottom: 0; }
+    .qa-q { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.2rem; }
+    .q-mark {
+      font-family: var(--font-display); font-size: 1.6rem;
+      font-weight: 900; color: var(--gold); line-height: 1;
+      flex-shrink: 0; margin-top: -0.1rem;
+    }
+    .qa-q h3 {
+      font-family: var(--font-display); font-size: 1.3rem;
+      font-weight: 700; color: var(--green-deep); line-height: 1.35;
+    }
+    .qa-a { padding-left: 2.8rem; }
+    .qa-a p {
+      font-size: 0.95rem; color: var(--text-mid);
+      line-height: 1.9; margin-bottom: 0.9rem;
+    }
+    .qa-a p:last-child { margin-bottom: 0; }
+
+    .conclusion-block {
+      background: var(--green-deep); border-radius: var(--radius-lg);
+      padding: 4rem 3rem; margin: 5rem 0 0;
+      position: relative; overflow: hidden; text-align: center;
+    }
+    .conclusion-block::before {
+      content: '';
+      position: absolute; top: -120px; right: -120px;
+      width: 380px; height: 380px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(74,124,89,0.3), transparent 70%);
+      pointer-events: none;
+    }
+    .conclusion-block h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900;
+      color: var(--cream); margin-bottom: 1.4rem; position: relative; z-index: 1;
+    }
+    .conclusion-block h3 em { font-style: italic; color: var(--gold); }
+    .conclusion-block p {
+      font-size: 0.97rem; color: rgba(245,240,232,0.68);
+      line-height: 1.9; max-width: 620px;
+      margin: 0 auto 1.2rem; position: relative; z-index: 1;
+    }
+    .conclusion-block p:last-of-type { margin-bottom: 0; }
+
+    .thankyou-banner {
+      background: var(--gold); padding: 5.5rem 0;
+      text-align: center; position: relative; overflow: hidden;
+      margin-top: 5rem;
+    }
+    .thankyou-banner::before {
+      content: 'THANK YOU';
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-size: clamp(6rem, 18vw, 16rem); font-weight: 900;
+      color: rgba(26,58,42,0.07);
+      letter-spacing: -0.02em; pointer-events: none; user-select: none;
+    }
+    .thankyou-banner h2 {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 9vw, 8rem); font-weight: 900;
+      color: var(--green-deep); line-height: 1;
+      letter-spacing: -0.02em; position: relative; z-index: 1;
+    }
+    .thankyou-banner p {
+      font-size: 1rem; color: rgba(26,58,42,0.6);
+      margin-top: 1rem; position: relative; z-index: 1;
+      letter-spacing: 0.06em; font-weight: 500;
+    }
+
+    /* FOOTER */
+    footer { background: #0f1f16; padding: 2.4rem 0; }
+    .footer-inner {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-left {
+      font-family: var(--font-display); font-size: 0.95rem;
+      font-style: italic; color: rgba(245,240,232,0.38);
+    }
+    .footer-left span { color: var(--gold); font-style: normal; }
+    .footer-center {
+      font-family: var(--font-mono); font-size: 0.68rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(245,240,232,0.25); text-align: center;
+    }
+    .footer-right {
+      font-family: var(--font-mono); font-size: 0.68rem;
+      letter-spacing: 0.1em; color: rgba(201,168,76,0.42);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .photo-grid { grid-template-columns: repeat(2, 1fr); }
+      .photo-grid.four-col { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .hero-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+      .split-grid { grid-template-columns: 1fr; }
+      .photo-grid.layout-tall .grid-item:first-child { grid-row: span 1; }
+      .grid-item.tall { min-height: 220px; }
+      .conclusion-block { padding: 2.8rem 1.8rem; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .photo-grid { grid-template-columns: 1fr; }
+      .qa-a { padding-left: 1.5rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav id="mainNav">
+    <div class="container nav-inner">
+      <a href="#about" class="nav-logo">CWTS 2<span>.</span></a>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#reflections">Reflections</a></li>
+        <li><a href="#conclusion">Conclusion</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ==========================================
+       SECTION 1 — ABOUT ME & INTRODUCTION
+  =========================================== -->
+  <section id="about">
+    <div class="hero-orb orb1"></div>
+    <div class="hero-orb orb2"></div>
+
+    <div class="container">
+      <div class="hero-layout">
+
+        <!-- Identity -->
+        <div>
+          <div class="eyebrow reveal">
+            <div class="dot"></div>
+            <span>CWTS 2 Portfolio · A.Y. 2025–2026</span>
+          </div>
+
+          <h1 class="hero-name reveal reveal-delay-1">
+            Mikayrie<br/><em>Dulay</em>
+          </h1>
+
+          <p class="hero-tagline reveal reveal-delay-2">
+            First-year BS Information Technology student at Northern Luzon Adventist College (NLAC) — believing that technology and service are two sides of the same calling, both existing to uplift the lives of others.
+          </p>
+
+          <div class="hero-chips reveal reveal-delay-3">
+            <span class="chip">BSIT · Year 1</span>
+            <span class="chip">NLAC</span>
+            <span class="chip">120 Hrs Rendered</span>
+            <span class="chip">NSTP · RA 9163</span>
+          </div>
+        </div>
+
+        <!-- CWTS Intro Card -->
+        <div class="reveal reveal-delay-2">
+          <div class="cwts-intro-card">
+            <span class="section-label">CWTS Introduction</span>
+            <div class="gold-rule"></div>
+            <h3>Community Service is the <em>Bridge</em> Between Empathy and Action</h3>
+            <p>
+              The Civic Welfare Training Service (CWTS) is the institutional expression of a deeper truth: that education is incomplete without service. Under Republic Act 9163, CWTS 2 requires students to render 120 hours of community service — not as a burden, but as a formation experience.
+            </p>
+            <p>
+              For me, those 120 hours were spent within the campus grounds of Northern Luzon Adventist College (NLAC) — sweeping, cleaning, landscaping, and maintaining the shared spaces we all call home. Each hour was a small act. Together, they became something meaningful: a commitment made visible through labor, through presence, through showing up.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <a href="#experience" class="hero-scroll" aria-label="Scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </a>
+  </section>
+
+  <div class="wave" style="background:var(--green-deep);">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60" preserveAspectRatio="none">
+      <path fill="#f5f0e8" d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z"/>
+    </svg>
+  </div>
+
+  <!-- ==========================================
+       SECTION 2 — EXPERIENCE & COMMUNITY SERVICE
+  =========================================== -->
+  <section id="experience">
+    <div class="container">
+
+      <div class="section-header">
+        <span class="section-label reveal">Formation &amp; Field Work</span>
+        <h2 class="reveal reveal-delay-1">Experience &amp; <em>Service</em></h2>
+        <p class="reveal reveal-delay-2">The values that guide the work, and the work itself — documented with honesty and pride.</p>
+      </div>
+
+      <!-- Split: Values + Key Experiences -->
+      <div class="split-grid">
+        <div class="split-panel reveal">
+          <h3>⛪ Core Values &amp; Faith</h3>
+          <ul class="values-list">
+            <li>
+              <span class="ico">✝️</span>
+              <div><strong>Faith-Centered Service —</strong> As a student of a Seventh-day Adventist institution, I believe service flows from a commitment to love one's neighbor. Every task rendered was an act of worship in action.</div>
+            </li>
+            <li>
+              <span class="ico">🤝</span>
+              <div><strong>Integrity —</strong> Showing up even when no one is watching, doing the work fully and properly, and being accountable to every hour rendered.</div>
+            </li>
+            <li>
+              <span class="ico">🌱</span>
+              <div><strong>Stewardship —</strong> Caring for the campus environment as a reflection of caring for the community. A clean space fosters dignity and shared well-being.</div>
+            </li>
+            <li>
+              <span class="ico">💡</span>
+              <div><strong>Growth Mindset —</strong> Approaching every task — no matter how humble — as an opportunity to learn patience, teamwork, and humility.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="split-panel reveal reveal-delay-2">
+          <h3>🗂 Key Experiences</h3>
+          <div class="exp-items">
+            <div class="exp-item">
+              <span class="exp-num">01</span>
+              <div class="exp-item-text">
+                <strong>Campus Grounds Cleaning</strong>
+                <span>Clearing pathways, pulling weeds, collecting leaf litter, and maintaining the visual order of shared outdoor spaces.</span>
+              </div>
+            </div>
+            <div class="exp-item">
+              <span class="exp-num">02</span>
+              <div class="exp-item-text">
+                <strong>Building Maintenance &amp; Sanitation</strong>
+                <span>Mopping corridors, cleaning restrooms, sanitizing common areas — the unglamorous but essential work of community care.</span>
+              </div>
+            </div>
+            <div class="exp-item">
+              <span class="exp-num">03</span>
+              <div class="exp-item-text">
+                <strong>Final Community Service Day</strong>
+                <span>A culminating service day alongside fellow CWTS students — larger in scale, unified in purpose and spirit.</span>
+              </div>
+            </div>
+            <div class="exp-item">
+              <span class="exp-num">04</span>
+              <div class="exp-item-text">
+                <strong>Week of Prayer Participation</strong>
+                <span>Active attendance and reflection during the school's WOP — integrating spiritual formation with service formation.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- end split-grid -->
+
+      <!-- Gallery 1: Community Service -->
+      <div class="gallery-label reveal">
+        <span class="section-label" style="justify-content:center;display:flex;">Photo Gallery</span>
+        <h3>Community Service</h3>
+        <p>Weekly service sessions across the campus — 120 hours, fully rendered.</p>
+      </div>
+
+      <div class="photo-grid layout-tall reveal reveal-delay-1">
+        <!-- REPLACE each .ph div with: <img src="your-photo.jpg" alt="Description" /> -->
+        <div class="grid-item tall">
+          <div class="ph"><span class="ph-icon">📷</span><span class="ph-label">Photo 1</span></div>
+          <div class="photo-overlay"><span>Campus Grounds</span></div>
+        </div>
+        <div class="grid-item">
+          <div class="ph"><span class="ph-icon">📷</span><span class="ph-label">Photo 2</span></div>
+          <div class="photo-overlay"><span>Main Corridor</span></div>
+        </div>
+        <div class="grid-item">
+          <div class="ph"><span class="ph-icon">📷</span><span class="ph-label">Photo 3</span></div>
+          <div class="photo-overlay"><span>Restroom Cleaning</span></div>
+        </div>
+        <div class="grid-item">
+          <div class="ph"><span class="ph-icon">📷</span><span class="ph-label">Photo 4</span></div>
+          <div class="photo-overlay"><span>Garden &amp; Landscaping</span></div>
+        </div>
+        <div class="grid-item">
+          <div class="ph"><span class="ph-icon">📷</span><span class="ph-label">Photo 5</span></div>
+          <div class="photo-overlay"><span>Library &amp; Labs</span></div>
+        </div>
+        <div class="grid-item">
+          <div class="ph"><span class="ph-icon">📷</span><span class="ph-label">Photo 6</span></div>
+          <div class="photo-overlay"><span>Sports Court</span></div>
+        </div>
+      </div>
+
+      <!-- Gallery 2: Final Community Service -->
+      <div class="gallery-label reveal" style="margin-top:1rem;">
+        <span class="section-label" style="justify-content:center;display:flex;">Photo Gallery</span>
+        <h3>Final Community Service</h3>
+        <p>The culminating service day — a full-scale, community-wide effort.</p>
+      </div>
+
+      <div class="photo-grid four-col reveal reveal-delay-1" style="margin-bottom:0;">
+        <div class="grid-item">
+          <div class="ph"><span class="ph-icon">📷</span><span class="ph-label">Final Day 1</span></div>
+          <div class="photo-overlay"><span>Team Assembly</span></div>
+        </div>
+        <div class="grid-item">
+          <div class="ph"><span class="ph-icon">📷</span><span class="ph-label">Final Day 2</span></div>
+          <div class="photo-overlay"><span>Outdoor Cleanup</span></div>
+        </div>
+        <div class="grid-item">
+          <div class="ph"><span class="ph-icon">📷</span><span class="ph-label">Final Day 3</span></div>
+          <div class="photo-overlay"><span>Group Effort</span></div>
+        </div>
+        <div class="grid-item">
+          <div class="ph"><span class="ph-icon">📷</span><span class="ph-label">Final Day 4</span></div>
+          <div class="photo-overlay"><span>After the Work</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="wave" style="background:var(--cream);">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60" preserveAspectRatio="none">
+      <path fill="#1a3a2a" d="M0,40 C400,0 1000,60 1440,20 L1440,60 L0,60 Z"/>
+    </svg>
+  </div>
+
+  <!-- ==========================================
+       SECTION 3 — WEEK OF PRAYER REFLECTIONS
+  =========================================== -->
+  <section id="reflections">
+    <div class="container">
+      <div class="reflections-inner">
+
+        <div class="section-header">
+          <span class="section-label reveal">WOP Reflections</span>
+          <h2 class="reveal reveal-delay-1">Week of Prayer<br/><em>Day by Day</em></h2>
+          <p class="reveal reveal-delay-2">Five days of sermons under the theme <em style="color:var(--gold);">Transformed for Eternity</em> — reflecting on Jacob, Rahab, Zacchaeus, the Samaritan woman, and Peter.</p>
+        </div>
+
+        <div class="day-cards">
+
+          <!-- DAY 1 -->
+          <div class="day-card reveal">
+            <div class="day-card-header">
+              <span class="day-badge">Day 1</span>
+              <h4>The Blessing of Brokenness</h4>
+            </div>
+            <blockquote>"It is better to walk with a limp in God's will than to run freely in the wrong direction."</blockquote>
+            <p><strong style="color:var(--gold-light);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;">Topic: Jacob's Transformation &nbsp;·&nbsp; Sermon by Bro. John Paul G. Bilinario</strong></p>
+            <p style="margin-top:0.8rem;">
+              Bro. Bilinario's sermon on Jacob was a strong warning about the dangers of relying only on ourselves. He compared Jacob's tricky nature with his later surrender to God — teaching me that while being smart might get us what we want, it often costs us our peace.
+            </p>
+            <p>
+              The most important part for me was about how God meets us in our hardest moments. Jacob met God at the river Jabbok when he was alone and afraid. This shows that God often removes distractions so we can see who we really are. Pain and being alone are not always punishments — often, they are the only things loud enough to make us listen to God.
+            </p>
+            <p>
+              This sermon changed how I see my struggles. Instead of seeing problems as obstacles, I now see them as chances for God to change me. Like Jacob, I often rely on my own plans instead of trusting God completely. I commit to embracing my "Jabbok moments" — those times when I feel alone and uncertain — and surrendering to God's transformation. True strength comes not from being perfect, but from depending fully on Him. I am ready to walk with a limp if it means walking with God.
+            </p>
+          </div>
+
+          <!-- DAY 2 -->
+          <div class="day-card reveal reveal-delay-1">
+            <div class="day-card-header">
+              <span class="day-badge">Day 2</span>
+              <h4>The Scarlet Thread of Redemption</h4>
+            </div>
+            <blockquote>"Being saved is not about who we are or what we have done — it is about applying the blood of Jesus to our lives."</blockquote>
+            <p><strong style="color:var(--gold-light);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;">Topic: Rahab and the Two Witnesses &nbsp;·&nbsp; Sermon by Bro. Jes Lejano</strong></p>
+            <p style="margin-top:0.8rem;">
+              Bro. Lejano's sermon connected the history of Rahab with our spiritual life today. The two spies were not just scouts — they were symbols of the Old and New Testaments. Just as Rahab had to hide these men to save her life, the Church must hide the Word of God in her heart to survive in a wicked world.
+            </p>
+            <p>
+              The most powerful image was the Red Rope. In a city about to be destroyed, that single red rope was the only thing that saved Rahab's house — a symbol of the blood of Jesus. Rahab had a sinful past, but she was saved because she used the rope. Like her, we are living in a world that will end, but we have a way out: holding onto the Word of God and the Blood of Jesus.
+            </p>
+            <p>
+              This sermon gave me two daily habits: <em>the Red Rope</em> — daily repentance, being cleaned each day by asking for forgiveness — and <em>the Hidden Spies</em> — daily Bible study, hiding God's Word in my heart, not just owning a Bible.
+            </p>
+          </div>
+
+          <!-- DAY 3 -->
+          <div class="day-card reveal reveal-delay-2">
+            <div class="day-card-header">
+              <span class="day-badge">Day 3</span>
+              <h4>Faith Begins When Pride Ends</h4>
+            </div>
+            <blockquote>"Faith begins when pride ends. Sometimes our fear of people blocks our view of God."</blockquote>
+            <p><strong style="color:var(--gold-light);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;">Topic: Zacchaeus the Tax Collector &nbsp;·&nbsp; Sermon by Bro. Dodon Lavisto</strong></p>
+            <p style="margin-top:0.8rem;">
+              Bro. Lavisto's sermon showed a clear path of spiritual change through five stages — from being rejected to being redeemed. The most striking point was that Zacchaeus, a rich and powerful man, climbed a tree. That picture of a grown man doing something shameful to get a better view made me ask myself: am I too worried about what others think to truly seek Jesus?
+            </p>
+            <p>
+              What moved me most was the moment of calling. Jesus invited Himself to Zacchaeus's house <em>before</em> Zacchaeus changed his life. The world tells us to fix ourselves before we are accepted. Jesus does the opposite — He offers His presence first, and then change follows. I do not need to be perfect to come to God. I just need to open the door.
+            </p>
+            <p>
+              Zacchaeus's story challenges my own pride. There are times I let my reputation hold me back from fully seeking Jesus. But this sermon also reminded me that true transformation must show in real actions. Like Zacchaeus, my faith must move beyond words to a changed heart that is visible to others.
+            </p>
+          </div>
+
+          <!-- DAY 4 -->
+          <div class="day-card reveal reveal-delay-3">
+            <div class="day-card-header">
+              <span class="day-badge">Day 4</span>
+              <h4>The Well of Grace</h4>
+            </div>
+            <blockquote>"Jesus meets us before the change — because He causes the change."</blockquote>
+            <p><strong style="color:var(--gold-light);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;">Topic: The Samaritan Woman &nbsp;·&nbsp; Sermon by Bro. Vilyfredo De Guzman</strong></p>
+            <p style="margin-top:0.8rem;">
+              Bro. De Guzman shared his own story of being a former gangster and drug addict, connecting it powerfully to the Samaritan woman. Jesus met the woman at noon — the hottest, most shameful hour — which showed me that He purposely goes into our places of shame to save us. He challenged my belief that I need to clean up before coming to God.
+            </p>
+            <p>
+              The difference between <em>sin</em> and <em>thirst</em> was eye-opening. Bro. De Guzman admitted it wasn't drugs that ruined his life — it was his thirst for acceptance. Similarly, the woman's problem was her emptiness. This made me examine my own thirsts: what am I using to fill my heart? Jesus exposes these things not to condemn, but to free us — offering Living Water so we stop drinking from things that leave us empty.
+            </p>
+            <p>
+              The most powerful image was the woman leaving her jar behind to run back to the city. That jar was her old burdens and past life. This sermon was a call to surrender. I realized I am carrying a water jar of my own plans and mistakes — and today's message invited me to leave it with Jesus.
+            </p>
+          </div>
+
+          <!-- DAY 5 -->
+          <div class="day-card reveal reveal-delay-4">
+            <div class="day-card-header">
+              <span class="day-badge">Day 5</span>
+              <h4>The Look of Love</h4>
+            </div>
+            <blockquote>"When I repeat the same sins, Jesus looks at me not to condemn me — but to call me back."</blockquote>
+            <p><strong style="color:var(--gold-light);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;">Topic: Peter — From Fear to Faithfulness &nbsp;·&nbsp; Sermon by Bro. John Ray Fabelia</strong></p>
+            <p style="margin-top:0.8rem;">
+              The final sermon spoke to me deeply because like Peter, my promises to God are often louder than my actions. Fear makes us forget our identity — Peter was brave, yet fear of a servant girl made him act as if he didn't know Jesus. I realized I also have moments where I deny my faith by following the crowd instead of doing what is right.
+            </p>
+            <p>
+              The most moving part was the look Jesus gave Peter after the denial. I always thought it was a look of anger. But Bro. Fabelia said it was a look of love and sadness. That changes everything. And in John 21, Jesus didn't need Peter's apologies or explanations — He needed Peter's heart. Three times: "Do you love me?" Restoration is not about explaining why we failed. It is about saying we love Him.
+            </p>
+            <p>
+              This sermon convinced me that our story does not end with failure. I want to leave this Week of Prayer with that assurance. I am <em>Transformed for Eternity</em> — not because I never fail, but because His grace always restores me. Peter went from a coward to a leader. So can I.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave" style="background:var(--green-deep);">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60" preserveAspectRatio="none">
+      <path fill="#f5f0e8" d="M0,20 C480,60 960,0 1440,30 L1440,60 L0,60 Z"/>
+    </svg>
+  </div>
+
+  <!-- ==========================================
+       SECTION 4 — THE 3 LAST QUESTIONS & CONCLUSION
+  =========================================== -->
+  <section id="conclusion">
+    <div class="container">
+
+      <div class="section-header">
+        <span class="section-label reveal">Final Reflection</span>
+        <h2 class="reveal reveal-delay-1">The 3 Last <em>Questions</em></h2>
+        <p class="reveal reveal-delay-2">Three questions that bring the whole CWTS experience into honest, personal account.</p>
+      </div>
+
+      <div class="qa-wrapper">
+
+        <!-- Q1 -->
+        <div class="qa-item reveal">
+          <div class="qa-q">
+            <span class="q-mark">Q</span>
+            <h3>What did you learn about yourself through your CWTS service experience?</h3>
+          </div>
+          <div class="qa-a">
+            <!-- REPLACE: Your answer to Q1 -->
+            <p>
+              I learned that I am more capable than I give myself credit for — and also more impatient than I would like to admit. The service hours forced me to slow down. When you're sweeping a long corridor at seven in the morning, there is no way to rush it. You either do the whole job or you leave it half-done. That patient consistency — seeing it through without shortcuts — was something I had to deliberately choose each time.
+            </p>
+            <p>
+              I also learned that I deeply value purpose in my tasks. Knowing that a clean hallway means my classmates walk in a dignified space — that made the broom feel lighter. Purpose transforms labor into service.
+            </p>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="qa-item reveal reveal-delay-1">
+          <div class="qa-q">
+            <span class="q-mark">Q</span>
+            <h3>How has CWTS changed the way you see your role in your community and future career?</h3>
+          </div>
+          <div class="qa-a">
+            <!-- REPLACE: Your answer to Q2 -->
+            <p>
+              CWTS has fundamentally reframed how I think about what it means to be an IT professional. Before, I thought my impact would come from lines of code and technical solutions — and that's still true, but it's incomplete. The most sophisticated system in the world means nothing if the person building it has no regard for the people it will serve.
+            </p>
+            <p>
+              Sweeping floors alongside classmates taught me that community is built by people who show up. That is the role I want to carry into my career: an IT professional who sees technology as a vehicle for genuine service — not a goal in itself, but a means to improve lives, starting with the community closest to me.
+            </p>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="qa-item reveal reveal-delay-2">
+          <div class="qa-q">
+            <span class="q-mark">Q</span>
+            <h3>If you could speak to your future self ten years from now, what would you say about these 120 hours?</h3>
+          </div>
+          <div class="qa-a">
+            <!-- REPLACE: Your answer to Q3 -->
+            <p>
+              I would say: don't forget where you started. Before the career, before the credentials, before the projects and the systems — there were 120 hours of quiet, unglamorous, faithful work. Hours that no one applauded loudly, but that shaped you in ways you are still discovering.
+            </p>
+            <p>
+              Remember the early mornings. Remember the weight of a full garbage bag and the satisfaction of an empty bin. Remember that service is not beneath you — it is the very foundation of everything worthwhile you will build. The ten-years-from-now version of you will have the tools. Don't let her forget the hands that learned to serve before they learned to code.
+            </p>
+          </div>
+        </div>
+
+      </div><!-- end qa-wrapper -->
+
+      <!-- Conclusion Block -->
+      <div class="conclusion-block reveal">
+        <h3>A <em>Conclusion</em> Written in Hours</h3>
+        <p>
+          One hundred and twenty hours. Broken down, they are just numbers. But lived — they are early mornings, tired muscles, quiet pride, shared laughter, and the slow, steady satisfaction of work done well and done freely.
+        </p>
+        <p>
+          CWTS 2 asked me to give time. What it gave back was far greater: a clearer sense of who I am, a deeper appreciation for community, and a conviction that the most meaningful career I can build is one in service to others. These 120 hours are complete. The lessons they taught me are not.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Thank You Banner -->
+    <div class="thankyou-banner">
+      <h2>Thank You.</h2>
+      <p>Mikayrie Dulay &nbsp;·&nbsp; BSIT Year 1 &nbsp;·&nbsp; CWTS 2 &nbsp;·&nbsp; A.Y. 2025–2026</p>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <span>Mikayrie Dulay</span> — CWTS 2 Portfolio
+      </div>
+      <div class="footer-center">
+        © 2026 · Northern Luzon Adventist College · All Rights Reserved
+      </div>
+      <div class="footer-right">
+        BS Information Technology · Year 1
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky Nav
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Scroll Reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const ro = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => ro.observe(el));
+
+    // Hero immediate reveal
+    window.addEventListener('load', () => {
+      document.querySelectorAll('#about .reveal').forEach((el, i) => {
+        setTimeout(() => el.classList.add('visible'), 180 + i * 140);
+      });
+    });
+  </script>
+
+</body>
+</html>
